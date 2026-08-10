@@ -62,4 +62,11 @@ class User extends Authenticatable
             ->whereKey($company->getKey())
             ->exists();
     }
+
+    public function canAccessBranch(Branch $branch): bool
+    {
+        return $this->branches()
+            ->whereKey($branch->getKey())
+            ->exists();
+    }
 }
