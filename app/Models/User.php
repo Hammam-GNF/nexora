@@ -55,4 +55,11 @@ class User extends Authenticatable
     {
         return RolePermission::allows($this->role, $permission);
     }
+
+    public function canAccessCompany(Company $company): bool
+    {
+        return $this->companies()
+            ->whereKey($company->getKey())
+            ->exists();
+    }
 }
