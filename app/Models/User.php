@@ -4,7 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Enums\Permission;
 use App\Enums\UserRole;
+use App\Support\Authorization\RolePermission;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -47,5 +49,10 @@ class User extends Authenticatable
     public function warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'warehouse_user')->withTimestamps();
+    }
+
+    public function hasPermission(Permission $permission): bool
+    {
+        return RolePermission::allows($this->role, $permission);
     }
 }
