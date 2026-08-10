@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Enums\Permission;
 use App\Support\Tenancy\CurrentCompany;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        foreach (Permission::cases() as $permission) {
+            Gate::define($permission->value, function ($user) use ($permission): bool {
+                return $user->hasPermission($permission);
+            });
+        }
     }
 }
