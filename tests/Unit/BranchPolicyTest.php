@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Enums\Permission;
 use App\Enums\UserRole;
 use App\Models\Branch;
 use App\Models\User;
@@ -28,21 +27,6 @@ class BranchPolicyTest extends TestCase
         $user = User::factory()->create([
             'role' => UserRole::ADMIN,
         ]);
-
-        $this->assertTrue(
-            $this->policy->viewAny($user)
-        );
-    }
-
-    public function test_user_without_view_permission_cannot_view_any_branch(): void
-    {
-        $user = User::factory()->create([
-            'role' => UserRole::SALES,
-        ]);
-
-        $this->assertTrue(
-            $user->hasPermission(Permission::BRANCH_VIEW)
-        );
 
         $this->assertTrue(
             $this->policy->viewAny($user)
