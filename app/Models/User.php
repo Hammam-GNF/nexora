@@ -69,4 +69,11 @@ class User extends Authenticatable
             ->whereKey($branch->getKey())
             ->exists();
     }
+
+    public function canAccessWarehouse(Warehouse $warehouse): bool
+    {
+        return $this->warehouses()
+            ->whereKey($warehouse->getKey())
+            ->exists();
+    }
 }
