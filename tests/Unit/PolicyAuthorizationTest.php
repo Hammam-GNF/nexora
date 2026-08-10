@@ -97,4 +97,38 @@ class PolicyAuthorizationTest extends TestCase
             $user->can('view', $warehouse)
         );
     }
+
+    public function test_gate_uses_company_policy_for_view_any(): void
+    {
+        $user = User::factory()->create([
+            'role' => UserRole::ADMIN,
+        ]);
+
+        $this->assertTrue(
+            $user->can('viewAny', Company::class)
+        );
+    }
+
+    public function test_gate_uses_branch_policy_for_view_any(): void
+    {
+        $user = User::factory()->create([
+            'role' => UserRole::ADMIN,
+        ]);
+
+        $this->assertTrue(
+            $user->can('viewAny', Branch::class)
+        );
+    }
+
+    public function test_gate_uses_warehouse_policy_for_view_any(): void
+    {
+        $user = User::factory()->create([
+            'role' => UserRole::ADMIN,
+        ]);
+
+        $this->assertTrue(
+            $user->can('viewAny', Warehouse::class)
+        );
+    }
+
 }
